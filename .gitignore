@@ -37,3 +37,6 @@ durga-ref.webp
 brag-output/
 brag-output-*/
 .qodo/
+
+# Local build-time scratch files, not needed in the deployed site
+partials/
