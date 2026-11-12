@@ -1,0 +1,39 @@
+# Secrets - never commit these
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Dependencies
+node_modules/
+
+# Vercel
+.vercel/
+
+# Build output
+dist/
+build/
+.next/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Backups
+*.bak
+*.orig
+
+# Local-only working files - these would otherwise be publicly reachable
+# on the deployed site (e.g. unitywebworks.com/index-old.html)
+index-old.html
+index-before-labbook.html
+navaratri-ad.html
+navaratri-ad.png
+durga-ref.webp
+brag-output/
+brag-output-*/
+.qodo/

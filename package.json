@@ -1,0 +1,10 @@
+{
+  "name": "unitywebworks-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "UnityWebWorks brand site with AI assistant serverless function.",
+  "dependencies": {
+    "openai": "^7.55.0"
+  }
+}
