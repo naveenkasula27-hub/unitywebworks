@@ -1115,7 +1115,7 @@ a.cred-item:hover .cred-icon { background: var(--accent); color: var(--navy); }
 }
 
 /* FOOTER */
-footer { padding-block: 48px 32px; border-top: 1px solid var(--border); margin-top: 60px; }
+footer { padding-block: 48px 32px; margin-top: 60px; }
 
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
 @media (max-width: 720px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
@@ -1220,21 +1220,19 @@ a:hover { color: var(--navy); }
 .marquee-dot { background: var(--navy); opacity: 0.35; }
 
 footer {
-  position: relative; border-top: 0; margin-top: 60px;
-  /* isolation: isolate was removed here - in testing it triggered a GPU
-     raster bug in this specific page that corrupted the footer logo's
-     paint (rendered as a cropped fragment). The full-bleed footer::before
-     background still works correctly without it: position:relative plus
-     the pseudo-element's own z-index already establishes the needed
-     stacking order. */
-}
-footer::before {
-  content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw;
-  transform: translateX(-50%); background: var(--navy); z-index: -1;
-}
-footer::after {
-  content: ''; position: absolute; top: 0; left: 50%; width: 100vw; height: 4px;
-  transform: translateX(-50%); background: var(--orange); z-index: 0;
+  /* Full-bleed navy background achieved with layout (margin/padding math),
+     not position:absolute + z-index pseudo-elements. The earlier version
+     used z-index:-1 on footer::before, which needed isolation: isolate on
+     footer to stay contained - but that isolation corrupted the footer
+     logo's paint on the service detail pages (rendered as a cropped
+     fragment). Removing isolation without this fix left the z-index:-1
+     background escaping behind the page's own white background instead of
+     behind just the footer, which is the white gap under "fixed, logo
+     missing". This margin/padding technique (same one .tech-band already
+     uses further up this file) needs no stacking-context trick at all, so
+     it can't regress into either bug. */
+  margin-inline: calc(50% - 50vw); padding-inline: calc(50vw - 50%);
+  background: var(--navy); border-top: 4px solid var(--orange); margin-top: 60px;
 }
 .footer-col h4 { color: var(--amber); font-family: 'Poppins', sans-serif; }
 .footer-col ul a { color: rgba(255, 255, 255, 0.82); }
