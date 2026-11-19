@@ -189,7 +189,7 @@
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <a href="index.html#top" class="logo" aria-label="UnityWebWorks home"><img class="logo-img" src="images/logo-footer.png" alt="UnityWebWorks" width="240" height="46"></a>
+      <a href="index.html#top" class="logo footer-wordmark" aria-label="UnityWebWorks home">Unity<span>Web</span>Works</a>
       <p>Websites, apps, ads and automation built directly by the founder. Hyderabad-based, serving Medak, Hyderabad, Telangana, India and worldwide.</p>
     </div>
     <div class="footer-col">
@@ -305,19 +305,26 @@
     const toggle = document.getElementById('nav-toggle');
     const overlay = document.getElementById('nav-overlay');
     if (!toggle || !overlay) return;
+    overlay.inert = true;
     const close = () => {
       overlay.classList.remove('open');
       toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
+      overlay.inert = true;
       document.body.classList.remove('nav-locked');
     };
     const open = () => {
       overlay.classList.add('open');
       toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close menu');
+      overlay.inert = false;
+      document.documentElement.style.setProperty('--menu-top', Math.ceil(toggle.closest('nav').getBoundingClientRect().bottom) + 'px');
       document.body.classList.add('nav-locked');
     };
     toggle.addEventListener('click', () => {
       overlay.classList.contains('open') ? close() : open();
     });
+    window.addEventListener('resize', () => { if (window.innerWidth > 820) close(); });
     overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
   })();

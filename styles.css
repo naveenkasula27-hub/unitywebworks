@@ -151,11 +151,11 @@ nav.scrolled { padding-block: 14px; border-bottom: 1px solid var(--border); }
 }
 .nav-toggle:hover { border-color: var(--accent); }
 .nav-toggle span { width: 18px; height: 2px; background: var(--navy); border-radius: 2px; transition: transform 0.25s ease, opacity 0.2s ease; }
-.nav-toggle[aria-expanded="true"] span { background: var(--white); }
-.nav-toggle[aria-expanded="true"] { border-color: transparent; background: transparent; }
-.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+
+
+
+
 
 /* Full horizontal nav on tablet / laptop / desktop - hamburger is mobile-only */
 @media (min-width: 821px) { .nav-toggle { display: none; } }
@@ -1344,3 +1344,77 @@ nav.scrolled { border-bottom: 0; }
 .svc-learn-more svg { transition: transform 0.2s ease; }
 .svc-learn-more:hover { color: var(--orange); }
 .svc-learn-more:hover svg { transform: translateX(3px); }
+
+
+/* Responsive layout repairs: contain decoration without horizontal page panning. */
+html { overflow-x: clip; }
+body { overflow-x: clip; min-width: 0; }
+img, video { max-width: 100%; }
+section, .footer-grid > *, .contact-grid > *, .about-grid > * { min-width: 0; }
+.hero { overflow: clip; background: var(--navy); }
+.hero::before { width: 100%; }
+.tech-band, footer {
+  margin-inline: 0;
+  padding-inline: 0;
+  box-shadow: 0 0 0 100vmax var(--navy);
+  clip-path: inset(0 -100vmax);
+}
+.tech-band { box-shadow: 0 0 0 100vmax var(--navy-deep); }
+.tech-marquee-row, .marquee { max-width: 100%; overflow: clip; }
+.footer-wordmark {
+  display: inline-flex; flex-wrap: nowrap; gap: 0;
+  font-family: 'Poppins', sans-serif; font-weight: 700;
+  font-size: clamp(1.25rem, 2.2vw, 1.65rem); letter-spacing: -0.055em;
+  color: #fff; white-space: nowrap; line-height: 1.4;
+}
+.footer-wordmark span { color: var(--orange); }
+.footer-wordmark:hover { color: #fff; }
+.footer-grid { grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr)) minmax(0, 1.7fr); }
+.nav-toggle, .nav-toggle[aria-expanded="true"] {
+  background: var(--white); border: 1px solid rgba(20,33,61,.25);
+  min-width: 44px; min-height: 44px;
+}
+.nav-toggle span, .nav-toggle[aria-expanded="true"] span {
+  background: var(--navy); transform: none; opacity: 1;
+}
+.nav-toggle[aria-expanded="true"] { background: var(--pale); border-color: var(--orange); }
+.nav-overlay {
+  top: var(--menu-top, 88px); padding: 20px 20px max(24px, env(safe-area-inset-bottom));
+  justify-content: flex-start; gap: 20px; overflow-y: auto; overscroll-behavior: contain;
+  background: var(--navy-deep);
+}
+.nav-overlay-links { width: min(100%, 460px); gap: 8px; align-items: stretch; }
+.nav-overlay-links a {
+  display: block; padding: 10px 18px; border: 1px solid rgba(255,255,255,.15);
+  border-radius: 10px; background: var(--navy-mid-1); color: #fff; opacity: 1;
+  font-size: clamp(1rem, 3.5vw, 1.3rem); text-decoration: none;
+}
+.nav-overlay-links a:hover, .nav-overlay-links a:focus-visible {
+  background: var(--pale); color: var(--navy); border-color: var(--orange);
+}
+.nav-overlay-ctas { width: min(100%, 460px); gap: 10px; }
+.nav-overlay-ctas .btn { flex: 1 1 180px; justify-content: center; }
+.nav-overlay-ctas .btn-secondary { color: #fff; background: transparent; border-color: var(--amber); }
+.nav-cta:hover { color: #fff !important; }
+.ugc-grid { grid-template-columns: repeat(3, minmax(0, 300px)); justify-content: center; }
+.ugc-thumb { aspect-ratio: 9 / 16; }
+.ugc-video { object-fit: contain; background: var(--navy-deep); }
+@media (max-width: 1000px) and (min-width: 821px) {
+  .nav-links { gap: 14px; }
+  nav .logo-img { width: 170px; }
+}
+@media (max-width: 820px) {
+  .ugc-grid { grid-template-columns: repeat(2, minmax(0, 280px)); }
+  .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+  .footer-brand { grid-column: 1 / -1; }
+  .footer-wordmark { font-size: 1.65rem; }
+}
+@media (max-width: 480px) {
+  .ugc-grid { grid-template-columns: minmax(0, 280px); }
+  nav .logo-img { width: 155px; max-width: 43vw; }
+  .nav-toggle { margin-right: 8px; }
+  .nav-cta { font-size: .75rem; padding: 9px 10px; white-space: nowrap; }
+  .footer-grid { gap: 24px 16px; }
+  .footer-col:last-child { grid-column: 1 / -1; }
+  .hero-ctas { flex-wrap: wrap; }
+}
